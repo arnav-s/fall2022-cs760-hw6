@@ -157,6 +157,29 @@ Consider the following kernel function defined over $\mathbf z,\mathbf z'\in Z$,
 positive semi-definite, where $\mathbf K_{ij} = \kappa(\mathbf z_i
 , \mathbf z_j )$ for $i, j = 1 \ldots m$. (Let us assume that for $i \neq j$, we have
 $\mathbf z_i \neq \mathbf z_j$) Hint: An  $m\times m$  matrix $K $ is positive semi-definite if  $\forall \mathbf u\in \R^d: \mathbf u^\top \mathbf K\mathbf u\geq 0$.
+\begin{soln}
+    \\We're Given: 
+    \[ \mathbf K = [ \mathbf K_{ij} ] \quad \& \quad  \mathbf z_i \neq \mathbf z_j \;\;\mathrm{ if }\;\; \mathbf i \neq \mathbf j \]
+    \[ \implies \mathbf K = [ \kappa(\mathbf z_i,\mathbf z_j)  ] \quad \& \quad  \mathbf z_i \neq \mathbf z_j \;\;\mathrm{ if }\;\; \mathbf i \neq \mathbf j \]
+    \[ \implies \mathbf K_{ij}=\begin{cases}
+                1 \quad \mathrm{if }\;\; \mathbf i=\mathbf j,\\
+                0\quad \mathrm{otherwise}.\end{cases} 
+    \]
+    \\ Since $\mathbf K$ is an $m \times m$ Matrix,
+    \[ \implies \mathbf K = \mathbf{I_{m \times m}} \]
+    \\ To Prove:
+    \[ \mathbf x^\top \mathbf K\mathbf x\geq 0 \:\: \forall \mathbf x\in \R^m \]
+    \[ \implies x^\top \mathbf K\mathbf x = \mathbf x^\top \mathbf \mathbf{I_{m \times m}}\mathbf x \]
+    \[ \implies x^\top \mathbf K\mathbf x = \begin{bmatrix} \sum_{l=1}^{m} \mathbf x_l I_{l, 1} \:\: \sum_{l=1}^{m} \mathbf x_l I_{l, 2} \:\: \dots \:\: \sum_{l=1}^{m} \mathbf x_l I_{l, m} \end{bmatrix} \mathbf x \]
+    \\ Since $I_{i, j} = 1$ if i=j, else $I_{i, j} = 0$
+    \[ \forall i \in [m], \sum_{l=1}^{m}\mathbf{x}_l I_{l, i} =  0 + 0 + \dots + \mathbf{x_i} + \dots + 0 = \mathbf{x_i} \]
+    \[ \implies x^\top \mathbf K\mathbf x = \begin{bmatrix} x_1 \:\: x_2 \:\: \dots \:\: x_m \end{bmatrix} \mathbf x \]
+    \[ \implies x^\top \mathbf K\mathbf x = \mathbf x^\top \mathbf x \]
+    \\Since $\mathbf x^\top \mathbf x = \left \| x \right \|^{2} $ which is $ \geq 0 \forall x \in R^m $
+    \[ \implies x^\top \mathbf K\mathbf x \geq 0\:\: \forall \mathbf x\in \R^m \]
+    \\ Therefore, proved that $K$ is a positive semi-definite matrix
+
+\end{soln}
 \item (10 pts) Given a training set $(\mathbf z_1, y_1), \ldots,(\mathbf z_n, y_n)$ with binary labels, the dual SVM problem with the above
 kernel $\kappa$ will have parameters $a_1, \ldots, a_n,b \in \R$. (Let us assume that for $i \neq j$, we have
 $\mathbf z_i \neq \mathbf z_j$) The predictor
