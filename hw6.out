@@ -1,0 +1,7 @@
+\BOOKMARK [1][-]{section.1}{Kernel SVM [30pts]}{}% 1
+\BOOKMARK [1][-]{section.2}{Chow-Liu Algorithm [30 pts]}{}% 2
+\BOOKMARK [1][-]{section.3}{Game of Classifiers [60pts]}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Implementation}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{ Synthetic Dataset-1 \(20 pts\)}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Synthetic Dataset-2 \(20 pts\)}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Evaluation on Real Dataset \(20 pts\)}{section.3}% 7
