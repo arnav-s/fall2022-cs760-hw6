@@ -190,11 +190,22 @@ f(\mathbf z)=\sum_{i=1}^na_iy_i\kappa(\mathbf z_i,z) +b\;.
 Recall that the label prediction is $\mathrm{sgn}(f(\mathbf z))$. Prove that there exist $a_1, \ldots, a_n, b$ such that $f$ correctly separates
 the training set. In other words, $\kappa$ induces a feature space rich enough such that in it, any training set can be linearly separated.
 \begin{soln}
-    \\Let $\mathbf{z_k}$ be an arbitrary point in our training set. In order for our predictor to correctly predict the label of this arbitrary point, it must match the sign of the chosen training point, i.e.
+    \\Let $\mathbf{z_k}$ be an arbitrary point in our training set such that $k \in [1,\: n]$. In order for our predictor to correctly predict the label of this arbitrary point, it must match the sign of the chosen training point, i.e.
     \[ \mathrm{sgn}(f(\mathbf {z_k})) = \mathrm{sgn}(y_k)\]
     \\ where, 
     \[ f(\mathbf z)=\sum_{i=1}^na_iy_i\kappa(\mathbf z_i,z) +b\; \]
-    
+    \[ f(\mathbf {z_k})=\sum_{i=1}^na_iy_i\kappa(\mathbf z_i,z_k) +b\; \]\
+    \[ f(\mathbf {z_k})=\sum_{i \neq k}a_iy_i\kappa(\mathbf z_i,z_k) + a_ky_k\kappa(\mathbf z_k,z_k) +b\; \]
+    \\According to the definition of our kernel,
+    \[ f(\mathbf {z_k})=\sum_{i \neq k}a_iy_i(0 )+ a_ky_k(1) +b\; \]
+    \[ f(\mathbf {z_k})= a_ky_k +b\; \]
+    \\ Since $\mathrm{sgn}(f(\mathbf {z_k}))$ should be the same as $\mathrm{sgn}(y_k)$, we want:
+    \[ \mathrm{sgn}(a_ky_k +b) = \mathrm{sgn}(y_k)\; \]
+    \\ Therefore, any $a_1, \ldots, a_n, b$, that follow the condition above will be able to correctly separate the training set and therefore correctly predict all the examples.
+    \\ Taking the example of b = 0, $a_1, \ldots, a_n = 1$, we have 
+    \[ \mathrm{sgn}(1 \: (y_k) +0) = \mathrm{sgn}(y_k)\; \forall k \in [1, n]\]
+    \\Since the equation above is an identity, we can show that for $a_1, \ldots, a_n = 1$, $b = 0$, our kernel will be able to separate out all the training examples successfully for atleast one set of
+    $a_1, \ldots, a_n, b$
 \end{soln}
 \item (10 pts) How does that $f$ predict input $\mathbf z$ that is not in the training set?
 \begin{soln}
@@ -206,6 +217,7 @@ the training set. In other words, $\kappa$ induces a feature space rich enough s
     \[ = b\]
     \\ $\therefore\:,$ we will predict such a test example using the following criteria:
     \[ \mathrm{sgn}(f(\mathbf z)) = \mathrm{sgn}(b)\]
+    \\ This will result in the kernel guessing the value of $\mathrm{sgn}(f(\mathbf z))$, based on the sign of $b$, i.e. all examples not in the training set will be classified with the same label.
 \end{soln}
 \end{enumerate}
 
@@ -303,12 +315,49 @@ Let $\mu = 2.5$ and $\mathbf I_2$ be the $2 \times 2$ identity matrix. Generate 
 from $\mathcal{N} ([\mu, 0], \mathbf I_2)$, and $\mathcal{N} ([-\mu, 0], \mathbf I_2)$. For each class, generate 750 points (1500 in total). Randomly create train, validation, and test splits of 1000, 250, and 250 points, respectively. Do the following with this dataset:
 \begin{enumerate}
     \item  (5 pts) Train your Linear SVM, Logistic Regression models and report decision boundaries and test accuracies.
-
+    \begin{soln}
+        \\ {\fontsize{10pt}{12pt}\selectfont Linear Logistic Regression:} 
+        \\ Test accuracy = 98.8\%
+        \\ Decision Boundary:
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{images/gaussian-linear-lr.png}
+            \caption{ Linear Regression decision boundary on test set}
+        \end{figure}
+        {\fontsize{10pt}{12pt}\selectfont Linear SVM:} 
+        \\ Test accuracy = 98.8\%
+        \\ Decision Boundary:
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{images/gaussian-linear-svm.png}
+            \caption{ Linear Regression decision boundary on test set}
+        \end{figure}
+    \end{soln}
 \item (5 pts) Show the decision boundaries with $k$-NN and Naive Bayes Classifiers. (You can use library implementations or implement from scratch. Figure out the hyper-parameters using the validation set.)
-
+\begin{soln}
+    \\ {\fontsize{10pt}{12pt}\selectfont $k$-NN:}
+    \\ I chose k = 3 for my $k$-NN model. As increasing k beyond 3 resulted in diminishing returns on accuracy increase.  
+    \\ Test accuracy = 99.2\%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/gaussian-knn.png}
+        \caption{ $k$-NN decision boundary on test set}
+    \end{figure}
+    {\fontsize{10pt}{12pt}\selectfont Gausian Naive Bayes Model:} 
+    \\ Test accuracy = 99.2\%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/gaussian-naive-bayes.png}
+        \caption{ Gausian Naive Bayes decision boundary on test set}
+    \end{figure}
+\end{soln}
 \item (5 pts) Repeat the process by varying $\mu$ from 1.0 to 2.4 with a step size of 0.2 for each value of $\mu$ to obtain test
 accuracies of the models and plot ( $\mu$ on $x$-axis and test accuracy on $y$-axis). (You will have a curve for
 each of the 4-classifiers mentioned above.)
+\begin{soln}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/test_acc_vs_mu.png}
+        \caption{ Test set accuracy for the various models mentioned above as mu increases from 1.0 to 2.4}
+    \end{figure}
+\end{soln}
 \item (5 pts) What are your conclusions from this exercise?
 \end{enumerate}
 \subsection{Synthetic Dataset-2 (20 pts)}
@@ -318,11 +367,84 @@ Generate 1500 data points from the 2-D circles dataset of sklearn:\begin{verbati
 Randomly create train, validation, and test splits of 1000, 250, and 250 points, respectively. Evaluate the above classifiers in this setting.
 \begin{enumerate}
     \item ( 5 pts) Show decision boundaries for Linear SVM and Logistic Regression classifiers.
+    \begin{soln}
+        \\ {\fontsize{10pt}{12pt}\selectfont Linear Logistic Regression:} 
+        \\ Test accuracy = 48.8 \%
+        \\ Decision Boundary:
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{images/circles-linear-lr.png}
+            \caption{ Linear Regression decision boundary on test set}
+        \end{figure}
+        {\fontsize{10pt}{12pt}\selectfont Linear SVM:} 
+        \\ Test accuracy = 47.599999999999994 \%
+        \\ Decision Boundary:
+        \begin{figure}[H]
+            \includegraphics[width=\textwidth]{images/circles-linear-svm.png}
+            \caption{ Linear Regression decision boundary on test set}
+        \end{figure}
+    \end{soln}
 \item ( 5 pts) Show decision boundaries for Kernel SVM and Kernel Logistic Regression ( use rbf, polynomial
 kernels). Try different values of hyperparameters, and report results with whichever works best.
-
+\begin{soln}
+    \\ After tring out different hyper parameters I chose the following.
+    \\ {\fontsize{10pt}{12pt}\selectfont Linear Logistic Regression:} 
+    \\ Test accuracy = 98.8\%
+    \\
+    {\fontsize{10pt}{12pt}\selectfont Linear SVM:} 
+    \\ Test accuracy = 98.8\%
+    \\
+    \\ {\fontsize{10pt}{12pt}\selectfont Rbf Kernel Logistic Regression:}
+    \\ I chose 50 samples to compute the kernel function with, I chose the $\gamma = 0.01$ and a step size = 0.05
+    \\ Test accuracy = 100.0 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-rbf-lr.png}
+        \caption{ Rbf Kernel Logistic Regression decision boundary on test set}
+    \end{figure}
+    {\fontsize{10pt}{12pt}\selectfont Polynomial Kernel Logistic Regression:} 
+    \\ I chose 50 samples to compute the kernel function with, I chose the degree of the polynomial $d = 2$, polynomial constant $c = 1$ and a step size of 0.05
+    \\ Test accuracy = 100.0 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-poly-lr.png}
+        \caption{ Polynomial Kernel Logistic Regression decision boundary on test set}
+    \end{figure}
+    {\fontsize{10pt}{12pt}\selectfont Rbf Kernel SVM:} 
+    \\ I chose 50 samples to compute the kernel function with, I chose the $\gamma = \cfrac{1}{110}$, I chose the regularization parameter $C = 2.50$ and a step size of 0.05
+    \\ Test accuracy = 100.0 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-rbf-svm.png}
+        \caption{ Rbf Kernel SVM decision boundary on test set}
+    \end{figure}
+    {\fontsize{10pt}{12pt}\selectfont Polynomial Kernel SVM:}
+    \\ I chose 50 samples to compute the kernel function with, I chose the degree of the polynomial $d = 2$, polynomial constant $c = 1$, I chose the regularization parameter $C = 1.50$ and a step size of 0.05
+    \\ Test accuracy = 100.0 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-poly-svm.png}
+        \caption{ Polynomial Kernel SVM decision boundary on test set}
+    \end{figure}
+\end{soln}
 \item ( 5 pts ) Train Neural Network from HW4, and $k$-NN classifiers on this dataset and show decision boundaries. ( You can use library implementation for these classifiers).
-
+\begin{soln}
+    {\fontsize{10pt}{12pt}\selectfont HW4 Neural Networl:} 
+    \\ I chose step size of 0.05
+    \\ Test accuracy = 51.6 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-hw4NN.png}
+        \caption{ HW4 Neural Network boundary on test set}
+    \end{figure}
+    {\fontsize{10pt}{12pt}\selectfont $k$-NN on Circles dataset:}
+    \\ I k=3 for this dataset as well since it gave me a good tradeoff between computation runtime and accuracy
+    \\ Test accuracy = 100.0 \%
+    \\ Decision Boundary:
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/circles-kNN.png}
+        \caption{ Polynomial Kernel SVM decision boundary on test set}
+    \end{figure}
+\end{soln}
 \item ( 5 pts ) What are your conclusions from this exercise?
 \end{enumerate}
 \subsection{Evaluation on Real Dataset (20 pts)}
@@ -332,6 +454,39 @@ Let's put all this to some real use. For this problem, use the Wisconsin Breast 
 \end{verbatim}
 \begin{enumerate}
     \item  (10 pts) Do all the points of Section 3.3 in this dataset. Since these are high-dimensional data, you do not have to show the decision boundaries. Report test accuracies for these classifiers and discuss your findings.
+    \begin{soln}
+        \\ After tring out different hyper parameters I chose the following.\\
+        \\ {\fontsize{10pt}{12pt}\selectfont Linear Logistic Regression:} 
+        \\ Test accuracy = 96.842\%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont Linear SVM:} 
+        \\ Test accuracy = 97.895\%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont Rbf Kernel Logistic Regression:}
+        \\ I chose 50 samples to compute the kernel function with, I chose the $\gamma = \cfrac{10}{14}$ and a step size = 0.05
+        \\ Test accuracy = 61.0526 \%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont Polynomial Kernel Logistic Regression:} 
+        \\ I chose 50 samples to compute the kernel function with, I chose the degree of the polynomial $d = 1$, polynomial constant $c = 3$ and a step size of 0.05
+        \\ Test accuracy = 61.0526 \%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont Rbf Kernel SVM:} 
+        \\ I chose 50 samples to compute the kernel function with, I chose the $\gamma = \cfrac{1}{110}$, I chose the regularization parameter $C = 1.50$ and a step size of 0.05
+        \\ Test accuracy = 100.0 \%
+        \\
+        {\fontsize{10pt}{12pt}\selectfont Polynomial Kernel SVM:}
+        \\ I chose 50 samples to compute the kernel function with, I chose the degree of the polynomial $d = 6$, polynomial constant $c = 3$, I chose the regularization parameter $C = 1.50$ and a step size of 0.05
+        \\ Test accuracy = 95.7895 \%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont HW4 Neural Networl:} 
+        \\ I chose step size of 0.05
+        \\ Test accuracy = 61.053 \%
+        \\
+        \\ {\fontsize{10pt}{12pt}\selectfont $k$-NN on Circles dataset:}
+        \\ I k=5 for this dataset as well since it gave me a good tradeoff between computation runtime and accuracy. Increasing k further didn't significantly improve performance.
+        \\ Test accuracy = 94.7368 \%
+        \\
+    \end{soln}
 \item (10 pts) In addition, you also want to figure out the important features which determine the class. Which regularization will you use for this? Upgrade your SVM, Kernel SVM implementation to include this
 regularization. Discuss the important features that you obtain by running your regularized SVM on this dataset. (You might need to normalize this dataset before training any classifier.)
 \end{enumerate}
